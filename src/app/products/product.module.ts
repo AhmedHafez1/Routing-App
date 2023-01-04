@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 import { ProductListComponent } from './product-list.component';
@@ -8,12 +9,15 @@ import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
-    SharedModule
+    SharedModule,
+    RouterModule.forChild([
+      { path: 'products', component: ProductListComponent },
+    ]),
   ],
   declarations: [
     ProductListComponent,
     ProductDetailComponent,
-    ProductEditComponent
-  ]
+    ProductEditComponent,
+  ],
 })
-export class ProductModule { }
+export class ProductModule {}
