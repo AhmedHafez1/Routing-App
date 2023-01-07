@@ -1,27 +1,31 @@
 <div class="card">
   <div class="card-header">
-    {{pageTitle}}
+    {{ pageTitle }}
   </div>
 
-  <div class="card-body"
-       *ngIf="product">
-    <form novalidate
-          #productForm="ngForm">
-
+  <div class="card-body" *ngIf="product">
+    <form novalidate #productForm="ngForm">
       <div class="row mt-2">
-        <label class="col-md-2 col-form-label"
-               for="productNameId">Product Name</label>
+        <label class="col-md-2 col-form-label" for="productNameId"
+          >Product Name</label
+        >
         <div class="col-md-8">
-          <input class="form-control"
-                 id="productNameId"
-                 type="text"
-                 placeholder="Name (required)"
-                 required
-                 minlength="3"
-                 [(ngModel)]=product.productName
-                 name="productName"
-                 #productNameVar="ngModel"
-                 [ngClass]="{'is-invalid': (productNameVar.touched || productNameVar.dirty) && !productNameVar.valid }" />
+          <input
+            class="form-control"
+            id="productNameId"
+            type="text"
+            placeholder="Name (required)"
+            required
+            minlength="3"
+            [(ngModel)]="product.productName"
+            name="productName"
+            #productNameVar="ngModel"
+            [ngClass]="{
+              'is-invalid':
+                (productNameVar.touched || productNameVar.dirty) &&
+                !productNameVar.valid
+            }"
+          />
           <span class="invalid-feedback">
             <span *ngIf="productNameVar.errors?.['required']">
               Product name is required.
@@ -34,18 +38,25 @@
       </div>
 
       <div class="row mt-2">
-        <label class="col-md-2 col-form-label"
-               for="productCodeId">Product Code</label>
+        <label class="col-md-2 col-form-label" for="productCodeId"
+          >Product Code</label
+        >
         <div class="col-md-8">
-          <input class="form-control"
-                 id="productCodeId"
-                 type="text"
-                 placeholder="Code (required)"
-                 required
-                 [(ngModel)]=product.productCode
-                 name="productCode"
-                 #productCodeVar="ngModel"
-                 [ngClass]="{'is-invalid': (productCodeVar.touched || productCodeVar.dirty) && !productCodeVar.valid }" />
+          <input
+            class="form-control"
+            id="productCodeId"
+            type="text"
+            placeholder="Code (required)"
+            required
+            [(ngModel)]="product.productCode"
+            name="productCode"
+            #productCodeVar="ngModel"
+            [ngClass]="{
+              'is-invalid':
+                (productCodeVar.touched || productCodeVar.dirty) &&
+                !productCodeVar.valid
+            }"
+          />
           <span class="invalid-feedback">
             <span *ngIf="productCodeVar.errors?.['required']">
               Product code is required.
@@ -55,39 +66,53 @@
       </div>
 
       <div class="row mt-2">
-        <label class="col-md-2 col-form-label"
-               for="descriptionId">Description</label>
+        <label class="col-md-2 col-form-label" for="descriptionId"
+          >Description</label
+        >
         <div class="col-md-8">
-          <textarea class="form-control"
-                    id="descriptionId"
-                    placeholder="Description"
-                    rows=3
-                    [(ngModel)]=product.description
-                    name="description"></textarea>
+          <textarea
+            class="form-control"
+            id="descriptionId"
+            placeholder="Description"
+            rows="3"
+            [(ngModel)]="product.description"
+            name="description"
+          ></textarea>
         </div>
       </div>
 
       <div class="row mt-2">
         <div class="col-md-4">
-          <button class="btn btn-primary mr-3"
-                  style="width:80px"
-                  type="button"
-                  [title]="productForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
-                  [disabled]="!productForm.valid"
-                  (click)="saveProduct()">
+          <button
+            class="btn btn-primary mr-3"
+            style="width: 80px"
+            type="button"
+            [title]="
+              productForm.valid
+                ? 'Save your entered data'
+                : 'Disabled until the form data is valid'
+            "
+            [disabled]="!productForm.valid"
+            (click)="saveProduct()"
+          >
             Save
           </button>
-          <button class="btn btn-outline-secondary mr-3"
-                  style="width:80px"
-                  type="button"
-                  title="Cancel your edits">
+          <button
+            class="btn btn-outline-secondary mr-3"
+            style="width: 80px"
+            type="button"
+            title="Cancel your edits"
+            [routerLink]="['/products']"
+          >
             Cancel
           </button>
-          <button class="btn btn-outline-warning"
-                  style="width:80px"
-                  type="button"
-                  title="Delete this product"
-                  (click)="deleteProduct()">
+          <button
+            class="btn btn-outline-warning"
+            style="width: 80px"
+            type="button"
+            title="Delete this product"
+            (click)="deleteProduct()"
+          >
             Delete
           </button>
         </div>
@@ -96,6 +121,4 @@
   </div>
 </div>
 
-<div class="alert alert-danger"
-     *ngIf="errorMessage">{{errorMessage}}
-</div>
+<div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
