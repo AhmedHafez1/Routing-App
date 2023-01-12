@@ -1,23 +1,35 @@
 import { ProductService } from './product.service';
-import { Product } from './product';
 import { Injectable } from '@angular/core';
 import {
   Resolve,
   RouterStateSnapshot,
   ActivatedRouteSnapshot,
 } from '@angular/router';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
+import { ProductResolved } from './product';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProductResolver implements Resolve<Product> {
+export class ProductResolver implements Resolve<ProductResolved> {
   constructor(private productService: ProductService) {}
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<Product> {
+  ): Observable<ProductResolved> {
     const id = Number(route.paramMap?.get('id'));
-    return this.productService.getProduct(id);
+
+    if (isNaN(id)) {
+      const message = 'Product id is not a number: ' + id;
+      return of({ product: null, error: message });
+    }
+    return this.productService.getProduct(id).pipe(
+      map((product) => ({ product })),
+      catchError((e) => {
+        const message = 'Retrieval error: ' + e;
+        console.error(message);
+        return of({ product: null, error: message });
+      })
+    );
   }
 }
