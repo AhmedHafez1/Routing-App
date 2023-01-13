@@ -1,4 +1,4 @@
-import { Product } from './../product';
+import { Product, ProductResolved } from './../product';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component } from '@angular/core';
 
@@ -24,16 +24,10 @@ export class ProductEditComponent {
   ) {}
 
   ngOnInit(): void {
-    this.activeRoute.paramMap.subscribe((paramMap) => {
-      const id = +paramMap.get('id')!;
-      this.getProduct(id);
-    });
-  }
-
-  getProduct(id: number): void {
-    this.productService.getProduct(id).subscribe({
-      next: (product) => this.onProductRetrieved(product),
-      error: (err) => (this.errorMessage = err),
+    this.activeRoute.data.subscribe((data) => {
+      const resolvedData = data['product'] as ProductResolved;
+      this.errorMessage = resolvedData.error ?? '';
+      resolvedData.product && this.onProductRetrieved(resolvedData.product);
     });
   }
 
