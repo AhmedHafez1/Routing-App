@@ -23,7 +23,7 @@ import { ProductResolver } from './product.resolver';
       {
         path: 'products/:id/edit',
         component: ProductEditComponent,
-        resolve: { product: ProductResolver },
+        resolve: { resolvedData: ProductResolver },
         children: [
           { path: '', redirectTo: 'info', pathMatch: 'full' },
           { path: 'info', component: ProductEditInfoComponent },

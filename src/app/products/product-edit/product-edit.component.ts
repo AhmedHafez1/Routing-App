@@ -25,7 +25,7 @@ export class ProductEditComponent {
 
   ngOnInit(): void {
     this.activeRoute.data.subscribe((data) => {
-      const resolvedData = data['product'] as ProductResolved;
+      const resolvedData = data['resolvedData'] as ProductResolved;
       this.errorMessage = resolvedData.error ?? '';
       resolvedData.product && this.onProductRetrieved(resolvedData.product);
     });
