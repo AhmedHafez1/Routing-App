@@ -1,3 +1,4 @@
+import { MessageService } from './messages/message.service';
 import { Component } from '@angular/core';
 import {
   NavigationCancel,
@@ -30,7 +31,15 @@ export class AppComponent {
     return '';
   }
 
-  constructor(private authService: AuthService, private router: Router) {
+  get isMessagesDisplayed(): boolean {
+    return this.messageService.isMessagesDisplayed;
+  }
+
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private messageService: MessageService
+  ) {
     router.events.subscribe((routerEvent: Event) =>
       this.checkRouterEvent(routerEvent)
     );
@@ -51,5 +60,15 @@ export class AppComponent {
   logOut(): void {
     this.authService.logout();
     this.router.navigateByUrl('/welcome');
+  }
+
+  showMessages() {
+    this.router.navigate([{ outlets: { popup: ['messages'] } }]);
+    this.messageService.isMessagesDisplayed = true;
+  }
+
+  hideMessages() {
+    this.router.navigate([{ outlets: { popup: [] } }]);
+    this.messageService.isMessagesDisplayed = false;
   }
 }
