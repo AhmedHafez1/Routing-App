@@ -1,3 +1,4 @@
+import { AuthGuard } from './../user/auth.guard';
 import { ProductEditTagsComponent } from './product-edit/product-edit-tags.component';
 import { ProductEditInfoComponent } from './product-edit/product-edit-info.component';
 import { RouterModule } from '@angular/router';
@@ -16,6 +17,7 @@ import { ProductResolver } from './product.resolver';
     RouterModule.forChild([
       {
         path: 'products',
+        canActivate: [AuthGuard],
         children: [
           { path: '', component: ProductListComponent },
           {
