@@ -14,7 +14,17 @@ export class ProductEditComponent {
   pageTitle = 'Product Edit';
   errorMessage = '';
 
-  product: Product | null = null;
+  private currentProduct?: Product;
+  private originalProduct?: Product;
+
+  get product(): Product | undefined {
+    return this.currentProduct;
+  }
+
+  set product(product: Product | undefined) {
+    this.currentProduct = product;
+    this.originalProduct = { ...product } as Product;
+  }
 
   constructor(
     private productService: ProductService,
@@ -29,6 +39,13 @@ export class ProductEditComponent {
       this.errorMessage = resolvedData.error ?? '';
       resolvedData.product && this.onProductRetrieved(resolvedData.product);
     });
+  }
+
+  isDirty(): boolean {
+    return (
+      JSON.stringify(this.currentProduct) !==
+      JSON.stringify(this.originalProduct)
+    );
   }
 
   onProductRetrieved(product: Product): void {
@@ -60,6 +77,11 @@ export class ProductEditComponent {
     }
   }
 
+  restet(): void {
+    this.originalProduct = undefined;
+    this.currentProduct = undefined;
+  }
+
   saveProduct(): void {
     if (this.product) {
       if (this.product.id === 0) {
@@ -88,6 +110,8 @@ export class ProductEditComponent {
     if (message) {
       this.messageService.addMessage(message);
     }
+
+    this.restet();
 
     // Navigate back to the product list
     this.router.navigateByUrl('/products');
