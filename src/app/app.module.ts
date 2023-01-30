@@ -15,6 +15,7 @@ import { PageNotFoundComponent } from './page-not-found.component';
 import { UserModule } from './user/user.module';
 import { MessageModule } from './messages/message.module';
 import { AppRoutingModule } from './app-routing.module';
+import { PrinterModule } from 'printer';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { AppRoutingModule } from './app-routing.module';
     UserModule,
     MessageModule,
     AppRoutingModule,
+    PrinterModule,
   ],
   declarations: [AppComponent, WelcomeComponent, PageNotFoundComponent],
   bootstrap: [AppComponent],

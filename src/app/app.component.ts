@@ -10,6 +10,7 @@ import {
 } from '@angular/router';
 
 import { AuthService } from './user/auth.service';
+import { PrinterService } from 'printer';
 
 @Component({
   selector: 'pm-root',
@@ -38,11 +39,14 @@ export class AppComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private printerService: PrinterService
   ) {
     router.events.subscribe((routerEvent: Event) =>
       this.checkRouterEvent(routerEvent)
     );
+
+    this.printerService.welcome('my beloved family ❤️');
   }
 
   checkRouterEvent(event: Event): void {
